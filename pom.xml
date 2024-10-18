@@ -608,7 +608,7 @@
                 <module>hbase-agent</module>
                 <module>hdfs-agent</module>
                 <module>hive-agent</module>
-                <module>knox-agent</module>
+<!--                <module>knox-agent</module>-->
                 <module>storm-agent</module>
                 <module>plugin-yarn</module>
                 <module>plugin-ozone</module>
