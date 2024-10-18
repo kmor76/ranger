@@ -133,7 +133,7 @@ then
     exit 1
 fi
 
-docker-compose --version > /dev/null 2>&1
+docker compose --version > /dev/null 2>&1
 
 if [ $? -ne 0 ]
 then
@@ -199,8 +199,8 @@ then
 
     if [ ${build_base_image} -eq 1 ]
     then
-        echo "+ docker-compose -f docker-compose.ranger-base.yml build --no-cache"
-        docker-compose -f docker-compose.ranger-base.yml build --no-cache
+        echo "+ docker compose -f docker-compose.ranger-base.yml build --no-cache"
+        docker compose -f docker-compose.ranger-base.yml build --no-cache
     fi
 
     if [ ${build_ranger} -eq 1 ]
@@ -209,11 +209,11 @@ then
         then
             cd ${RD_HOME}
 
-            echo "+ docker-compose -f docker-compose.ranger-base.yml -f docker-compose.ranger-build.yml down --remove-orphans"
-            docker-compose -f docker-compose.ranger-base.yml -f docker-compose.ranger-build.yml down --remove-orphans
+            echo "+ docker compose -f docker-compose.ranger-base.yml -f docker-compose.ranger-build.yml down --remove-orphans"
+            docker compose -f docker-compose.ranger-base.yml -f docker-compose.ranger-build.yml down --remove-orphans
 
-            echo "+ docker-compose -f docker-compose.ranger-base.yml -f docker-compose.ranger-build.yml up"
-            docker-compose -f docker-compose.ranger-base.yml -f docker-compose.ranger-build.yml up
+            echo "+ docker compose -f docker-compose.ranger-base.yml -f docker-compose.ranger-build.yml up"
+            docker compose -f docker-compose.ranger-base.yml -f docker-compose.ranger-build.yml up
             if [ $? -ne 0 ]
             then
                 echo "ERROR: Unable to complete RANGER build using DOCKER. Exiting ...."
@@ -237,7 +237,7 @@ fi
 
 cd ${RD_HOME}
 
-docker-compose ${OPT} ${DOCKER_ACTION} ${DOCKER_COMPOSE_FLAGS}
+docker compose ${OPT} ${DOCKER_ACTION} ${DOCKER_COMPOSE_FLAGS}
 
 echo
 echo "################### LIST OF DOCKER PROCESSES EXPOSING PORTS #####################"
