@@ -1,14 +1,7 @@
 version: '3'
 services:
   ranger:
-    build:
-      context: .
-      dockerfile: Dockerfile.ranger
-      args:
-        - RANGER_VERSION=${RANGER_VERSION}
-        - RANGER_DB_TYPE=${RANGER_DB_TYPE}
-        - RANGER_ADMIN_JAVA_VERSION=${RANGER_ADMIN_JAVA_VERSION}
-    image: ranger:latest
+    image: kmor76/ranger:2.5.0
     container_name: ranger
     hostname: ranger.example.com
     stdin_open: true
@@ -32,12 +25,7 @@ services:
       - /home/ranger/scripts/ranger.sh
 
   ranger-zk:
-    build:
-      context: .
-      dockerfile: Dockerfile.ranger-zk
-      args:
-        - ZK_VERSION=${ZK_VERSION}
-    image: ranger-zk
+    image: kmor76/ranger-zk:2.5.0
     container_name: ranger-zk
     hostname: ranger-zk.example.com
     networks:
@@ -46,12 +34,7 @@ services:
       - "2181:2181"
 
   ranger-solr:
-    build:
-      context: .
-      dockerfile: Dockerfile.ranger-solr
-      args:
-        - SOLR_VERSION=${SOLR_VERSION}
-    image: ranger-solr
+    image: kmor76/ranger-solr:2.5.0
     container_name: ranger-solr
     hostname: ranger-solr.example.com
     networks:
@@ -62,6 +45,18 @@ services:
       - solr-precreate
       - ranger_audits
       - /opt/solr/server/solr/configsets/ranger_audits/
+
+  ranger-db:
+    image: kmor76/ranger-postgres:2.5.0
+    container_name: ranger-postgres
+    hostname: ranger-db.example.com
+    networks:
+      - ranger
+    healthcheck:
+      test: 'su -c "pg_isready -q" postgres'
+      interval: 10s
+      timeout: 2s
+      retries: 30
 
 networks:
   ranger:
